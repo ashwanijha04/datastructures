@@ -1,0 +1,108 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+
+/* Defines the stack size */
+#define SIZE 5
+
+/* Function Declarations */
+int isFull(int);
+int isEmpty(int);
+void push(int*, int [], int);
+void pop(int*, int []);
+void display(int, int []);
+
+int isFull(int top)
+{
+	if(top == SIZE - 1)
+		return 1;
+	else
+		return 0;
+}
+
+int isEmpty(int top)
+{
+	if(top == -1)
+		return 1;
+	else
+		return 0;
+}
+
+void push(int *top, int s[], int item)
+{
+	if(isFull(*top))
+	{
+		printf("Stack overflow\nCannot Insert\n");
+		return;
+	}
+
+	printf("Item to be pushed is: %d at location %d\n", item, *top + 1);
+	(*top)++;
+	s[*top] = item;
+}
+
+void pop(int *top, int s[])
+{
+	if(isEmpty(*top))
+	{
+		printf("Stack underflow\nNo elements in the stack\n");
+		return;
+	}
+	
+	printf("Item to be deleted is %d at location %d\n", s[*top], *top);
+	(*top)--;
+}
+
+void display(int top, int s[])
+{
+	int i;
+
+	if(top == -1)
+	{
+		printf("Stack underflow\nNo elements in the stack\n");
+		return;
+	}
+
+	else
+	{
+		printf("Contents of stack are:\n");
+
+		for(i = top; i >= 0; i--)
+		{
+			printf("|--|\n");
+			printf("|%d|\n",s[i]);
+		}
+	}
+}
+
+void main()
+{
+	int choice, item, s[SIZE], top;
+
+	top = -1;
+
+	printf("Welcome to Stack Program using arrays and pointers\n");
+
+	for(;;)
+	{
+		printf("1. Push\n2. Pop\n3. Display\n4. Exit\n");
+		printf("Enter the choice\n");
+		scanf("%d",&choice);
+
+		switch(choice)
+		{
+			case 1: printf("Please enter an item to be inserted\n");
+				scanf("%d",&item);
+				push(&top, s, item);
+				break;
+
+			case 2:	pop(&top, s);
+				break;
+
+			case 3: display(top, s);
+				break;
+
+			default: exit(0);
+		}
+	}
+}
