@@ -1,0 +1,114 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+/* Defines the stack size */
+#define STACK_SIZE 5
+
+/* Structure defining stack */
+struct stack
+{
+	int data[STACK_SIZE];
+	int top;
+};
+/* Creating the data type STACK */
+typedef struct stack STACK;
+
+/* Function Declarations */
+int isFull(STACK);
+int isEmpty(STACK);
+void push(STACK*);
+void pop(STACK*);
+void display(STACK);
+
+void main()
+{
+	STACK s;
+	int choice;
+
+	/* Stack top initial condition / empty condition is always set to -1 */
+	s.top = -1;
+
+	printf("\nProgram to implement stacks\n");
+
+	for(;;)
+	{
+		printf("\n1. Push\n2. Pop\n3. Display\n4. Exit\n");
+		printf("Please enter the choice\t");
+
+		scanf("%d", &choice);
+
+		switch(choice)
+		{
+			case 1:	push(&s);
+				break;
+			case 2:	pop(&s);
+				break;
+			case 3:	display(s);
+				break;
+			case 4: exit(0);
+			default:	printf("Invalid selection\nPlease re-enter\n");
+		}
+	}
+}
+
+int isFull(STACK s)
+{
+	return (s.top == STACK_SIZE -1) ? 1 : 0;
+}
+
+int isEmpty(STACK s)
+{
+	return (s.top == -1) ? 1 : 0;
+}
+
+void push(STACK *s)
+{
+	int item;
+
+	printf("Please enter the item to be inserted\n");
+	scanf("%d", &item);
+
+	if(isFull(*s))
+	{
+		printf("Cannot push %d into the stack\nStack overflow!!!\n", item);
+		return;
+	}
+
+	/* Increment top and set the top to appropriate position */
+	s->top++;
+	printf("Item %d will be inserted at %d position\n", item, s->top + 1);
+	/* Insert the item given by the user onto the top of stack */
+	s->data[s->top] = item;
+}
+
+void pop(STACK *s)
+{
+	if(isEmpty(*s))
+	{
+		printf("Cannot pop from stack\nStack underflow!!!\n");
+		return;
+	}
+
+	printf("%d is the element popped out of stack\n",s->data[s->top]);
+	/* Decrement the top to delete the element of stack */
+	s->top--;
+}
+
+void display(STACK s)
+{
+	int i;
+
+	if(isEmpty(s))
+	{
+		printf("Cannot print contents of stack\nStack underflow!!!\n");
+		return;
+	}
+
+	printf("Printing contents of stack\n");
+
+	for(i = 0; i <= s.top; i++)
+	{
+		printf("%d\n",s.data[i]);
+		sleep(1);
+	}
+}
