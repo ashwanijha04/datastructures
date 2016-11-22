@@ -1,0 +1,105 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+#define QUEUE_SIZE 5
+
+int qfull(int);
+int qempty(int, int);
+void enqueue(int, int*, int*, int*);
+void dequeue(int*, int*, int*);
+void display(int*, int, int);
+
+void main()
+{
+	int choice, item;
+	int f, r, q[QUEUE_SIZE];
+
+	f = 0;
+	r = -1;
+
+	printf("Linear Queue\n");
+	for(;;)
+	{
+		printf("Please enter a choice\n");
+		printf("1. Enqueue\n2. Dequeue\n3. Display\n4. Exit\n");
+		printf("Choice:\t");
+		scanf("%d", &choice);
+		
+		switch(choice)
+		{
+			case 1:
+				printf("Enter the element to be inserted:\t");
+				scanf("%d", &item);
+				enqueue(item, q, &f, &r);
+				break;
+
+			case 2:
+				dequeue(q, &f, &r);
+				break;
+
+			case 3:
+				display(q, f, r);
+				break;
+
+			default:
+				exit(0);
+		}
+	}
+}
+
+int qfull(int r)
+{
+	return (r == QUEUE_SIZE -1) ? 1 : 0;
+}
+
+void enqueue(int item, int q[], int *f, int *r)
+{
+	if(qfull(*r))
+	{
+		printf("Queue is full\nInsertion not possible\n");
+		return;
+	}
+
+	(*r)++;
+	q[*r] = item;
+}
+
+int qempty(int f, int r)
+{
+	return (f > r) ? 1 : 0;
+}
+void dequeue(int q[], int *f, int *r)
+{
+	int item_deleted;
+
+	if(qempty(*f, *r))
+	{
+		printf("Queue underflow\n");
+		return;
+	}
+
+	item_deleted = q[*f];
+	(*f)++;
+	
+	printf("The element deleted is:\t%d\n", item_deleted);
+
+	if(*f > *r)
+	{
+		*f = 0;
+		*r = -1;
+	}
+}
+void display(int q[], int f, int r)
+{
+	int i;
+
+	if(qempty(f, r))
+	{
+		printf("Queue is empty\nNo elements to display\n");
+		return;
+	}
+
+	printf("Displaying the contents of the queue\n");
+	for(i = f; i <= r; i++)
+		printf("%d\n", q[i]);	
+}
