@@ -1,0 +1,298 @@
+/* This program illustrates the conepts of the singly linked list */
+/* FRONT, REAR AND POSITION ARE ILLUSTRATED IN THE SAME PROGRAM */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+	int info;
+	struct node* link;
+};
+
+typedef struct node* NODE;
+
+NODE getnode()
+{
+	NODE x;
+	x = malloc(sizeof(struct node));
+
+	if(x==NULL)
+	{
+		printf("Node creation error\n");
+		return NULL;
+	}
+
+	return x;
+}
+
+NODE insert_front(int item, NODE first)
+{
+	NODE temp;
+
+	temp = getnode();
+	temp->info = item;
+	temp->link = first;
+
+	return temp;
+}
+
+NODE delete_front(NODE first)
+{
+	NODE temp;
+
+	if(first == NULL)
+	{
+		printf("Nothing to delete.");
+		return first;	
+	}
+
+	temp = first;
+	first = first->link;
+	printf("The item deleted is %d\n",temp->info);
+	free(temp);
+	return first;
+}
+
+NODE insert_rear(int item, NODE first)
+{
+	NODE temp,current;
+
+	temp = getnode();
+
+	temp->info = item;
+	temp->link = NULL;
+
+	if(first == NULL)
+	{
+		return temp;
+	}
+
+	current = first;
+
+	while(current->link != NULL)
+	{
+		current = current->link;
+	}
+	current->link = temp;
+
+	return first;
+}
+
+NODE delete_rear(NODE first)
+{
+	NODE temp,prev,current;
+
+	if(first == NULL)
+	{
+		printf("Nothing to delete\n");
+		return first;
+	}
+
+	if(first->link == NULL)
+	{
+		printf("Item deleted is %d\n",first->info);
+		free(first);
+		return NULL;
+	}
+
+	prev = NULL;
+	current = first;
+
+	while(current->link != NULL)
+	{
+		prev = current;
+		current = current->link;
+	}
+
+	prev->link = NULL;
+	printf("The item deleted is %d\n",current->info);
+	free(current);
+
+	return first;
+}
+
+NODE insert_position(int item, NODE first, int pos)
+{
+	int count = 1;
+
+	NODE temp,cur,prev;
+
+	temp = getnode();
+	temp->info = item;
+	temp->link = NULL;
+
+	if(first == NULL && pos == 1)
+	{
+		return temp;
+	}
+
+	if(first == NULL && pos>1)
+	{
+		printf("Invalid position\n");
+		free(temp);
+		return first;
+	}
+
+	if(pos==1)
+	{
+		temp->link = first;
+		return temp;
+	}
+
+	cur = first;
+	prev = NULL;
+
+	while(cur != NULL && pos != count)
+	{
+		prev = cur;
+		cur = cur->link;
+		count++;
+	}
+
+	if(cur == NULL && pos>count)
+	{
+		printf("Invalid position\n");
+		free(temp);
+		return first;
+	}
+
+	temp->link = cur;
+	prev->link = temp;
+	return first;
+}
+
+NODE delete_position(NODE first, int pos)
+{
+	int count = 1;
+	NODE temp,cur,prev;
+
+	if(first == NULL)
+	{
+		printf("Nothing to delete\n");
+		return first;
+	}
+
+	if(first->link == NULL && pos >1)
+	{
+		printf("Invalid position to delete\n");
+	}
+
+	if(pos == 1)
+	{
+		temp = first->link;
+		free(first);
+		return temp;
+	}
+
+	cur = first;
+	prev = NULL;
+
+	while(cur!=NULL && pos != count)
+	{
+		prev = cur;
+		cur = cur->link;
+		count++;
+	}
+
+	if(cur == NULL && pos > count)
+	{
+		printf("Invalid position\n");
+		return first;
+	}
+
+	prev->link = cur->link;
+	return first;
+
+}
+
+
+void display(NODE first)
+{
+	NODE cur;
+
+	if(first == NULL)
+	{
+		printf("Nothing to display\n");
+		return;
+	}
+
+	cur= first;
+
+	while(cur!=NULL)
+	{
+		printf("%d\n",cur->info);
+		cur = cur->link;
+	}
+}
+
+
+int main()
+{
+	NODE first;
+	int item;
+	int pos;
+
+	first = NULL;
+
+	int choice;
+
+	while(1)
+	{
+		printf("1. IF\n");
+		printf("2. IR\n");
+		printf("3. DF\n");
+		printf("4. DR\n");
+		printf("5. IP\n");
+		printf("6. DP\n");
+		printf("7. display\n");
+		scanf("%d",&choice);
+
+
+		switch(choice)
+		{
+			case 1:
+				printf("Enter the item: \n");
+				scanf("%d",&item);
+				first = insert_front(item,first);
+				break;
+
+			case 2:
+				printf("Enter the item: \n");
+				scanf("%d",&item);
+				first = insert_rear(item,first);
+				break;
+
+			case 3:
+				first = delete_front(first);
+				break;
+
+			case 4:
+				first = delete_rear(first);
+				break;
+
+			case 5:
+				printf("Enter the item: \n");
+				scanf("%d",&item);
+				printf("Enter the position\n");
+				scanf("%d",&pos);
+				first = insert_position(item,first,pos);
+				break;
+
+			case 6:
+				printf("Enter the position\n");
+				scanf("%d",&pos);
+				first = delete_position(first,pos);
+				break;
+
+			case 7:
+				display(first);
+				break;
+		}
+
+
+
+	}
+
+	return 0;
+}
