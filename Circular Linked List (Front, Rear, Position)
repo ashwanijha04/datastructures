@@ -134,19 +134,19 @@ NODE insert_position(int item, NODE last, int pos)
 		return temp;
 	}
 
-	if(last->link == last && pos > 1)
+	if(last->link == last && pos == 2)
 	{
-		printf("Invalid Position Entered. Try again !\n");
-		free(temp);
+		temp->link = last->link;
+		last->link = temp;
 		return last;
-	}
+	} 
 
 	if(pos == 1)
 	{
 		temp->link = last->link;
 		last->link = temp;
 
-		return last;
+		return temp;
 	}
 
 
@@ -157,10 +157,10 @@ NODE insert_position(int item, NODE last, int pos)
 	{
 		prev = cur;
 		cur = cur->link;
-		count ++;
+		count++;
 	}
 
-	if(cur->link == last && pos > count)
+	if( pos > count)
 	{
 		printf("Invalid position\n");
 		return last;
