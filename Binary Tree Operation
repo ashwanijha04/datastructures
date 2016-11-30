@@ -1,0 +1,158 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct node
+{
+    int info;
+    struct node* llink;
+    struct node* rlink;
+};
+typedef struct node* NODE;
+
+
+
+NODE getnode()
+{
+    NODE x;
+
+    x = malloc(sizeof(struct node));
+    if(x == NULL)
+    {
+        printf("Memory allocation error\n");
+        return NULL;
+    }
+
+    return x;
+}
+
+void pre_order(NODE root)
+{
+    if(root != NULL)
+    {
+        printf("%d\n",root->info);
+
+        pre_order(root->llink);
+        pre_order(root->rlink);
+    }
+}
+
+
+
+
+void in_order(NODE root)
+{
+    if(root != NULL)
+    {
+        in_order(root->llink);
+        printf("%d\n",root->info);
+        in_order(root->rlink);
+    }
+}
+
+
+
+void post_order(NODE root)
+{
+    if(root != NULL)
+    {
+        post_order(root->llink);
+        post_order(root->rlink);
+        printf("%d\n",root->info);
+    }
+}
+
+
+
+NODE insert_tree(NODE root, int item)
+{
+    NODE temp,cur,prev;
+
+    int i = 0; char direction[10];
+
+    temp = getnode();
+
+    temp->info = item;
+    temp->llink = NULL;
+    temp->rlink = NULL;
+
+    if(root == NULL)
+    {
+        return temp;
+    }
+
+    printf("Give the direction: \n");
+    scanf("%s",direction);
+
+    prev = NULL;
+    cur = root;
+
+    for(i=0; i<strlen(direction) && cur!=NULL; i++)
+    {
+        prev = cur;
+
+        if(direction[i] == 'L')
+            cur = cur->llink;
+        else
+            cur = cur->rlink;
+    }
+
+    if(cur != NULL || i != strlen(direction))
+    {
+        printf("Inserion not possible\n");
+        free(temp);
+        return root;
+    }
+
+    if(direction[i-1] == 'L')
+        prev->llink = temp;
+    else
+        prev->rlink = temp;
+
+    return root;
+
+}
+
+int main()
+{
+    NODE root = NULL;
+    int item;
+    int flag = 0;
+    int key;
+
+    int choice;
+
+    while(1)
+    {
+        printf("1. Create a Tree\n");
+        printf("2. Pre-Order Traversal\n");
+        printf("3. In-Order Traversal\n");
+        printf("4. Post-Order Traversal\n");
+    
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                printf("Enter an item: \n");
+                scanf("%d",&item);
+                root = insert_tree(root,item);
+                break;
+
+            case 2:
+                pre_order(root);
+                break;
+
+            case 3:
+                in_order(root);
+                break;
+
+            case 4:
+                post_order(root);
+                break;
+
+            default: 
+                exit(0);
+        }  
+    }
+}
