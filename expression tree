@@ -1,226 +1,114 @@
 #include<stdio.h>
+//#include<malloc.h>
 #include<stdlib.h>
- 
-//#include<conio.h>
- 
-//#include<ctype.h>
- 
-//#include<alloc.h>
- 
-#define size 20
- 
-typedef struct node
- 
-{ char data;
- 
-struct node *left;
- 
-struct node *right;
- 
-}
- 
-btree;
-            /*stack stores the operand nodes of the tree*/
-btree *stack[size];
- 
-int top;
- 
-int main()
- 
+#include<math.h>
+#include<string.h>
+#include<ctype.h>
+struct node
 {
- 
-btree *root;
- 
-char exp[80];
-        /*exp stores postfix expression*/
- 
-btree *create(char exp[80]);
- 
-void inorder(btree *root);
- 
-void preorder(btree *root);
- 
-void postorder(btree *root);
- 
+	int info;
+	struct node *llink;
+	struct node *rlink;
+};
+typedef struct node *NODE;
 
- 
-printf("\n enter the postfix expression:\n");
- 
-scanf("%s",exp);
- 
-top=-1;         /*Initialize the stack*/
- 
-root=create(exp);
- 
-printf("\n The tree is created.....\n");
- 
-printf("\n Inorder traversal: \n\n");
- 
-inorder(root);
- 
-printf("\n Preorder traversal: \n\n");
- 
-preorder(root);
- 
-printf("\n Postorder traversal: \n\n");
- 
-postorder(root);
-return 0;
- 
- 
-}
- 
-btree *create(char exp[])
- 
+NODE getnode()
 {
- 
-btree *temp;
- 
-int pos;
- 
-char ch;
- 
- 
-void push(btree*);
- 
-btree *pop();
- 
-pos=0;
- 
-ch=exp[pos];
- 
-while(ch!='\0')
- 
-{ 
-            /*create new node*/
- 
-temp=((btree*)malloc(sizeof(btree)));
- 
-temp->left=temp->right=NULL;
- 
-temp->data=ch;
- 
-if(isalpha(ch))
- 
-push(temp);
- 
-else if(ch=='+' ||ch=='-' || ch=='*' || ch=='/')
- 
-{ temp->right=pop();
- 
-temp->left=pop();
- 
-push(temp);
- 
+	NODE x;
+	x=(NODE)malloc(sizeof(struct node));
+	if(x==NULL)
+	{
+		printf("Out of memory \n");
+		exit(0);
+	}	
+	return x;
 }
- else
- 
-printf("\n Invalid char Expression\n");
- 
-pos++;
- 
-ch=exp[pos];
- 
+
+NODE create(char postfix[])
+{	
+	int i,k;
+	char symbol;
+	NODE st[20];
+	NODE temp;
+	for(i=k=0;(symbol=postfix[i])!='\0';i++)
+	{
+		temp=getnode();
+		temp->info=symbol;
+		temp->llink=temp->rlink=NULL;
+	
+	
+	if(isalnum(symbol))
+	{
+		st[k++]=temp;
+	}
+	else
+	{
+		temp->rlink=st[--k];
+		temp->llink=st[--k];
+		st[k++]=temp;
+	}
 }
- 
- temp=pop();
- 
-return(temp);
- 
+	printf("%c",temp->info);	
+	return st[--k];
 }
- 
-void push(btree *Node)
- 
-{ 
- 
-if(top+1
- 
->=size)
- 
-printf("Error:Stack is full\n");
- 
-top++;
- 
-stack[top]=Node;
- 
+
+float eval(NODE root)
+{
+	float num;
+	switch(root->info)
+	{
+		case'+':return eval(root->llink)+eval(root->rlink);
+		case'-':return eval(root->llink)-eval(root->rlink);
+		case'*':return eval(root->llink)*eval(root->rlink);
+		case'/':return eval(root->llink)/eval(root->rlink);
+		case'^':
+		case'$':
+			return pow(eval(root->llink),eval(root->rlink));
+
+		default:
+			if(isalpha(root->info))
+			{
+				printf("%c= ",root->info);
+				
+				scanf("%f",&num);
+				return num;
+			}
+			else
+				return root->info-'0';
+	}
 }
- 
-btree* pop()
- 
+
+void display(NODE root,int i)
 {
- 
-btree *Node;
- 
-if(top==-1)
- 
-printf("\nerror: stack is empty..\n");
- 
-Node =stack[top];
- 
-top--;
- 
-return(Node);
- 
+	int j;
+	if(root==NULL)return;
+	display(root->rlink,i+1);
+	for(j=0;j<i;j++)
+	{
+		printf("	");
+		printf("%c	",root->info);
+		printf("\n");
+	}	
+	display(root->llink,i+1);
 }
- 
- 
-/* functions for tree traversal*/
- 
-void inorder(btree *root)
- 
- 
+
+
+
+
+
+void main()
 {
- 
-btree *temp;
- 
-temp=root;
- 
-if(temp!=NULL)
- 
-{ inorder(temp->left);
- 
-printf("%c",temp->data);
- 
-inorder(temp->right);
- 
-}}
- 
-void preorder(btree *root)
- 
-{
- 
-btree *temp;
- 
-temp=root;
- 
-if(temp!=NULL)
- 
-{
- 
-printf("%c",temp->data);
- 
-preorder(temp->left);
- 
-preorder(temp->right);
- 
-}}
- 
-void postorder(btree *root)
- 
-{
- 
-btree *temp;
- 
-temp=root;
- 
-if(temp!=NULL)
- 
-{
-postorder(temp->left);
- 
-postorder(temp->right);
- 
-printf("%c",temp->data);
- 
-}
+	
+	char postfix[20];
+	float res;	
+	NODE root;
+	root=NULL;
+	printf("enter the postfix");
+	scanf("	%s",postfix);
+	root=create(postfix);
+	printf("The tree is \n");
+	display(root,1);
+	printf("Result is \n");
+	res=eval(root);
+	printf("Result= %f \n",res);
 }
