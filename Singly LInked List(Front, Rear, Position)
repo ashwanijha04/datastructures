@@ -125,11 +125,6 @@ NODE insert_position(int item, NODE first, int pos)
 		return temp;
 	}
 
-	if(pos == 0)
-	{
-		temp->link = first;
-		return temp;
-	}
 	cur = first;
 
 	while(pos-2 > 0)
