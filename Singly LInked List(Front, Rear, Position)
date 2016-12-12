@@ -112,55 +112,37 @@ NODE delete_rear(NODE first)
 	return first;
 }
 
+
+
 NODE insert_position(int item, NODE first, int pos)
 {
-	int count = 1;
-
-	NODE temp,cur,prev;
-
+	NODE temp,cur;
 	temp = getnode();
 	temp->info = item;
-	temp->link = NULL;
 
-	if(first == NULL && pos == 1)
+	if(first == NULL)
 	{
 		return temp;
 	}
 
-	if(first == NULL && pos>1)
-	{
-		printf("Invalid position\n");
-		free(temp);
-		return first;
-	}
-
-	if(pos==1)
+	if(pos == 0)
 	{
 		temp->link = first;
 		return temp;
 	}
-
 	cur = first;
-	prev = NULL;
 
-	while(cur != NULL && pos != count)
+	while(pos-2 > 0)
 	{
-		prev = cur;
 		cur = cur->link;
-		count++;
+		pos--;
 	}
-
-	if(cur == NULL && pos>count)
-	{
-		printf("Invalid position\n");
-		free(temp);
-		return first;
-	}
-
-	temp->link = cur;
-	prev->link = temp;
+	temp->link = cur->link;
+	cur->link = temp;
 	return first;
 }
+
+
 
 NODE delete_position(NODE first, int pos)
 {
