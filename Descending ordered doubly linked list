@@ -1,0 +1,117 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *left;
+    struct node *right;
+};
+typedef struct node * NODE;
+
+
+NODE getnode()
+{
+    NODE x;
+    x=(NODE)malloc(sizeof(struct node));
+
+    if(x==NULL)
+        printf("memory full\n");
+
+    return x;
+}
+
+
+NODE insert_order(NODE first,int element)
+{
+    NODE curr, prev,temp;
+    temp=getnode();
+
+/* Assigning Values */
+    temp->data = element;
+    temp->left = NULL;
+    temp->right = NULL;
+
+
+    if(first==NULL)
+        return temp;
+
+    else if(element > first->data)
+    {
+        temp->right=first;
+        first->left=temp;
+
+        return temp;
+    }
+
+
+    prev = NULL;
+    curr = first;
+
+    while (curr != NULL && element < curr->data)
+    {
+        prev=curr;
+        curr=curr->right;
+    }
+
+    if(curr!=NULL)
+        curr->left=temp; 
+
+    temp->right=curr;
+    prev->right=temp;
+    temp->left=prev;
+
+
+    return first;
+}
+
+void display(NODE first)
+{
+    NODE curr;
+    if(first==NULL)
+        printf("The List is full. \n");
+    else
+    {
+        printf("The sorted elemets in the list are: \n");
+        curr=first;
+
+        while(curr!=NULL)
+        {
+            printf("%d\t",curr->data);
+            curr=curr->right;
+        }
+        printf("\n");
+    }
+}
+
+int main()
+{
+    NODE first;
+    first=NULL;
+    int element,choice;
+    for(;;)
+    {
+        printf("1. Insert\n");
+        printf("2. Display\n");
+
+        scanf("%d",&choice);
+
+        switch(choice)
+        {
+            case 1:
+                printf("Enter the element to be inserted. \n");
+                scanf("%d",&element);
+                first=insert_order(first,element);
+                break;
+
+            case 2:
+                display(first);
+                break;
+
+            default: 
+                exit(0);
+        }
+    }
+
+    return 0;
+}
