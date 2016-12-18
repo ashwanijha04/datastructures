@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void tower(int n, char source, char aux, char destination)
+{
+	if(n==1)
+	{
+		printf("Move disc 1 from %c to %c \n",source, destination);
+		return;
+	}
+
+	tower(n-1, source, destination, aux);
+	printf("Move disc %d from %c to %c \n", n,source,destination);
+	tower(n-1, aux, source, destination);
+}
+
+int main()
+{
+	int n;
+	printf("Enter the number of discs to be moved : \n");
+	scanf("%d", &n);
+
+	printf("Moves to follow: \n");
+	tower(n,'A','B','C');
+}
