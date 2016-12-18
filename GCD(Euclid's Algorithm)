@@ -1,0 +1,25 @@
+/* GCD USING EUCLID'S ALGORITHM */
+#include <stdio.h>
+
+int gcd(int m, int n)
+{
+	if(m%n == 0)
+		return n;
+
+	else
+		return gcd(n,m%n);
+}
+
+int main()
+{
+	int m, n;
+	int result;
+	printf("Enter first number(m): \n");
+	scanf("%d",&m);
+
+	printf("Enter second number(n): \n");
+	scanf("%d",&n);
+	result = gcd(m,n);
+
+	printf("GCD(%d,%d) = %d \n",m,n,result);
+}
