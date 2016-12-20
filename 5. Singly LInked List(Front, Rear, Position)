@@ -111,9 +111,11 @@ NODE delete_rear(NODE first)
 
 	return first;
 }
+/**************************************
+METHOD 2 - INSERT POSITION
+**************************************/
 
-
-
+/*
 NODE insert_position(int item, NODE first, int pos)
 {
 	NODE temp,cur;
@@ -136,7 +138,54 @@ NODE insert_position(int item, NODE first, int pos)
 	cur->link = temp;
 	return first;
 }
+******************************************************************/
 
+NODE insert_position(NODE first, int item, int pos)
+{
+	int count = 1;
+	NODE temp, cur, prev;
+	
+	temp = getnode();
+	temp->info = item;
+	temp->link = NULL;
+	
+	if(first == NULL && pos == 1)
+		return temp;
+	
+	if(first == NULL && pos > 1)
+	{
+		printf("Invalid position\n");
+		free(temp);
+		return first;
+	}
+	
+	if(pos == 1)
+	{
+		temp->link = first;
+		return temp;
+	}
+	
+	cur = first;
+	prev = NULL;
+	
+	while(cur != NULL && pos != count)
+	{
+		prev = cur;
+		cur = cur->link;
+		count++;
+	}
+	
+	if(cur == NULL && pos > count)
+	{
+		printf("Invalid position\n");
+		free(temp);
+		return first;
+	}
+	
+	prev->link = temp;
+	temp->link = cur;
+	return first;
+}
 
 
 NODE delete_position(NODE first, int pos)
