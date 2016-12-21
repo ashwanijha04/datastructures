@@ -111,7 +111,7 @@ int main()
 /*********************************************
 TODO: 		1. SAVE THE INFIX TO POSTFIX PROGRAM IN THE SAME FOLDER with a dot h(.h) extension.
 		2. UNCOMMENT THE CODE BELOW.
-		3. DELETE LINES 119 AND 120.
+		3. DELETE LINES 121 AND 122.
 		4. UNCOMMENT THE HEADER FILE.
 **********************************************/
 	// printf("Enter the infix expression: \n");
