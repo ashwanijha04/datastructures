@@ -1,3 +1,10 @@
+/**************************************************************************************
+THIS PROGRAM IS SAME AS INSERTING AND DELETING FROM FRONT IN A CLL.
+DIFFERENCE : 
+TOP IS USED INSTEAD OF LAST.(Only the name changes. Everything else is the same)
+
+***************************************************************************************/
+
 #include<stdio.h>
 #include<malloc.h>
 #include<stdlib.h>
