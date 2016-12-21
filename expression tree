@@ -1,81 +1,89 @@
-#include<stdio.h>
-//#include<malloc.h>
-#include<stdlib.h>
-#include<math.h>
-#include<string.h>
-#include<ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <ctype.h>
+
+
 struct node
 {
-	int info;
-	struct node *llink;
-	struct node *rlink;
+	int data;
+	struct node* llink;
+	struct node* rlink;
 };
-typedef struct node *NODE;
+typedef struct node* NODE;
+
 
 NODE getnode()
 {
 	NODE x;
-	x=(NODE)malloc(sizeof(struct node));
-	if(x==NULL)
-	{
-		printf("Out of memory \n");
-		exit(0);
-	}	
+	x = malloc(sizeof(struct node));
+
 	return x;
 }
 
 NODE create(char postfix[])
-{	
+{
 	int i,k;
-	char symbol;
-	NODE st[20];
 	NODE temp;
-	for(i=k=0;(symbol=postfix[i])!='\0';i++)
+
+	char symbol;
+	NODE stack[100];
+
+	for(i=k=0; (symbol = postfix[i]) != '\0'; i++)
 	{
-		temp=getnode();
-		temp->info=symbol;
-		temp->llink=temp->rlink=NULL;
-	
-	
-	if(isalnum(symbol))
-	{
-		st[k++]=temp;
+		temp = getnode();
+		temp->data = symbol;
+		temp->llink = temp->rlink = NULL;
+		printf("yes");
+
+		if(isalnum(symbol))
+		{
+			stack[k++] = temp;
+
+		}
+
+		else
+		{
+			temp->rlink = stack[--k];
+			temp->llink = stack[--k];
+
+			stack[k++] = temp;
+		}
+
 	}
-	else
-	{
-		temp->rlink=st[--k];
-		temp->llink=st[--k];
-		st[k++]=temp;
-	}
-}
-	printf("%c",temp->info);	
-	return st[--k];
+	printf("DONE\n");
+
+	return stack[--k];
+
 }
 
-float eval(NODE root)
+float evaluate(NODE root)
 {
 	float num;
-	switch(root->info)
+
+	switch(root->data)
 	{
-		case'+':return eval(root->llink)+eval(root->rlink);
-		case'-':return eval(root->llink)-eval(root->rlink);
-		case'*':return eval(root->llink)*eval(root->rlink);
-		case'/':return eval(root->llink)/eval(root->rlink);
+		case '+' : return evaluate(root->llink) + evaluate(root->rlink);
+		case '-' : return evaluate(root->llink) - evaluate(root->rlink);
+		case '*' : return evaluate(root->llink) * evaluate(root->rlink);
+		case '/' : return evaluate(root->llink) / evaluate(root->rlink);
 		case'^':
 		case'$':
-			return pow(eval(root->llink),eval(root->rlink));
+			return pow(evaluate(root->llink),evaluate(root->rlink));
 
-		default:
-			if(isalpha(root->info))
-			{
-				printf("%c= ",root->info);
-				
-				scanf("%f",&num);
-				return num;
-			}
-			else
-				return root->info-'0';
+		default: 
+				if(isalpha(root->data))
+				{
+					printf("%c = \n", root->data);
+					scanf("%f",&num);
+					return num;
+				}
+
+				else
+					return root->data - '0';
 	}
+
+
 }
 
 void display(NODE root,int i)
@@ -85,29 +93,29 @@ void display(NODE root,int i)
 	display(root->rlink,i+1);
 	for(j=0;j<i;j++)
 		printf("	");
-	printf("%c	",root->info);
+	printf("%c	",root->data);
 	printf("\n");
 		
 	display(root->llink,i+1);
 }
 
 
-
-
-
-void main()
+int main()
 {
-	
-	char postfix[20];
-	float res;	
+	char postfix[100];
+	float res = 0;
 	NODE root;
-	root=NULL;
-	printf("enter the postfix");
-	scanf("	%s",postfix);
-	root=create(postfix);
-	printf("The tree is \n");
-	display(root,1);
-	printf("Result is \n");
-	res=eval(root);
-	printf("Result= %f \n",res);
+	root = NULL;
+
+	printf("Enter the postfix expression: \n");
+	scanf("%s",postfix);
+
+	root = create(postfix);
+	res = evaluate(root);
+	printf("The created tree is : \n");
+	display(root, 1);
+	printf("Result : %f \n",res);
+
+	return 0;
+
 }
