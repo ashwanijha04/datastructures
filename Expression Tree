@@ -109,7 +109,7 @@ int main()
 	NODE root;
 	root = NULL;
 /*********************************************
-TODO: 	1. SAVE THE INFIX TO POSTFIX PROGRAM IN THE SAME FOLDER.
+TODO: 		1. SAVE THE INFIX TO POSTFIX PROGRAM IN THE SAME FOLDER with a dot h(.h) extension.
 		2. UNCOMMENT THE CODE BELOW.
 		3. DELETE LINES 119 AND 120.
 		4. UNCOMMENT THE HEADER FILE.
