@@ -84,11 +84,10 @@ void display(NODE root,int i)
 	if(root==NULL)return;
 	display(root->rlink,i+1);
 	for(j=0;j<i;j++)
-	{
 		printf("	");
-		printf("%c	",root->info);
-		printf("\n");
-	}	
+	printf("%c	",root->info);
+	printf("\n");
+		
 	display(root->llink,i+1);
 }
 
