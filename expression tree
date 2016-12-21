@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <ctype.h>
+//#include "infixtopostfix.h"
 
 
 struct node
@@ -23,18 +24,20 @@ NODE getnode()
 
 NODE create(char postfix[])
 {
+
 	int i,k;
 	NODE temp;
 
 	char symbol;
 	NODE stack[100];
 
+
 	for(i=k=0; (symbol = postfix[i]) != '\0'; i++)
 	{
 		temp = getnode();
+
 		temp->data = symbol;
 		temp->llink = temp->rlink = NULL;
-		printf("yes");
 
 		if(isalnum(symbol))
 		{
@@ -51,7 +54,6 @@ NODE create(char postfix[])
 		}
 
 	}
-	printf("DONE\n");
 
 	return stack[--k];
 
@@ -102,13 +104,23 @@ void display(NODE root,int i)
 
 int main()
 {
-	char postfix[100];
+	char postfix[100], infix[100];
 	float res = 0;
 	NODE root;
 	root = NULL;
+/*********************************************
+TODO: 	1. SAVE THE INFIX TO POSTFIX PROGRAM IN THE SAME FOLDER.
+		2. UNCOMMENT THE CODE BELOW.
+		3. DELETE LINES 119 AND 120.
+		4. UNCOMMENT THE HEADER FILE.
+**********************************************/
+	// printf("Enter the infix expression: \n");
+	// scanf("%s",infix);
+	// infix_to_postfix(infix,postfix);
 
-	printf("Enter the postfix expression: \n");
+	printf("Enter a valid postfix expression: \n");
 	scanf("%s",postfix);
+
 
 	root = create(postfix);
 	res = evaluate(root);
