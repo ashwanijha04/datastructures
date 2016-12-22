@@ -1,0 +1,136 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+	int data;
+	struct node *link;
+};
+
+typedef struct node* NODE;
+
+NODE getnode()
+{
+	NODE x;
+
+	x = malloc(sizeof(struct node));
+
+	return x;
+}
+
+NODE insert_position(int item, NODE head, int pos)
+{
+	int i;
+	NODE temp,cur,prev;
+	
+	if((pos>head->data+1) || (pos < 1))
+	{
+
+		printf("Invalid position\n");
+		return head;
+	}
+	prev = head;
+	cur = head->link;
+	for(i=1; i<pos; i++)
+	{
+		prev = cur;
+		cur = cur->link;
+	}
+
+	temp = getnode();
+	temp->data = item;
+	prev->link = temp;
+	temp->link = cur;
+
+	head->data += 1;
+
+	return head;
+}
+
+NODE delete_last(NODE head)
+{
+
+	NODE cur,prev;
+	int i;
+
+	if(head->link == head)
+	{
+		printf("Nothing to delete\n");
+		return head;
+	}
+
+	prev = NULL;
+	cur = head;
+
+	for(i=0; i<head->data; i++)
+	{
+		prev = cur;
+		cur = cur->link;
+	}
+
+	prev->link = cur->link;
+	free(cur);
+	head->data -= 1;
+
+	return head;
+}
+
+void display(NODE head)
+{
+	NODE temp;
+
+	if(head == NULL)
+	{
+		printf("Nothing to display. \n");
+		return;
+	}
+
+	for(temp = head->link; temp!=head; temp=temp->link)
+	{
+		printf("%d\n",temp->data);
+		printf("\n");
+	}
+
+	printf("%d\n",temp->data);
+}
+
+
+int main()
+{
+	NODE head;
+	int choice,item,pos;
+	head=getnode();
+	head->link = head;
+	head->data = 0;
+
+	for(;;)
+	{
+	  printf("1. Insert Position\n2. Delete end\n3. display\n4. exit\n");
+	  printf("Enter the choice: \n");
+	  scanf("%d",&choice);
+	  switch(choice)
+		{
+		  
+			case 1:
+				printf("Enter the item: \n");
+			    scanf("%d",&item);
+		   		printf("Enter the position: \n");
+			    scanf("%d",&pos);		    
+				head=insert_position(item,head,pos);
+			    break;
+
+			case 2:
+				//printf("Enter the position : \n");
+			    //scanf("%d",&pos);
+				head=delete_last(head);
+			    break;
+             
+       		case 3:
+       			display(head);
+				break;
+        
+			default:exit(0);
+		}	
+	}
+
+}
