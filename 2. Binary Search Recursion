@@ -1,56 +1,57 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int binarysearch(int a[], int low, int high, int key)
+void binary_search(int a[], int low, int high,int key)
 {
-	int mid = (low+high)/2;
+
+	int mid;
 
 	if(low > high)
-		return 0;
+		return;
 
-	//printf("Works\n");
-
-	if(key == a[mid])
-	{
-		return mid + 1;
-	}
-
-	else if(key > a[mid])
-	{
-		binarysearch(a,mid+1,high,key);
-	}
 	else
-		binarysearch(a,low,mid-1,key);
-	return 0;
+	{
+		//printf("INSIDE else\n");
+		mid = (low+high)/2;
+
+		if(a[mid] == key)
+		{
+			printf("Element found at position %d\n",mid+1);
+		}
+		
+
+		else if(a[mid] < key)
+			binary_search(a,mid+1,high,key);
+
+		else
+			binary_search(a,low,mid-1,key);
+	}
+
+	
 
 }
 
 int main()
 {
-
-	int key,n,i;
 	int a[20];
+	int key,n;
+	int i;
 
-	printf("Enter the size of the array: \n");
+	printf("Enter the number of elements: \n");
 	scanf("%d",&n);
 
 	printf("Enter the elements in ascending order: \n");
-
-	for(i=0; i<n; i++)
+	
+	for(i=0; i<n;i++)
 	{
 		scanf("%d",&a[i]);
 	}
 
-	printf("Enter the key to be searched for: \n");
+
+	printf("Enter the element to be searched \n");
 	scanf("%d",&key);
 
-	int flag = binarysearch(a,0,n-1,key);
+	binary_search(a,0,n-1,key);
 
-	if(flag)
-	{
-		printf("Element found at position %d\n",flag );
-	}
-	else
-		printf("Element not found.\n");
-
+		
 }
