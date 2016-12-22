@@ -117,6 +117,9 @@ NODE delete_rear(NODE last)
 	free(last);
 	return cur;
 }
+/*****************************************************
+CODE UNDER PROCESS. CHECK THE FILE CONTAINING SEPERATE CIRCULAR LINKED LIST AT POSITION
+*******************************************************/
 
 NODE insert_position(int item, NODE last, int pos)
 {
