@@ -1,0 +1,146 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+	int info;
+	struct node *link;
+};
+typedef struct node* NODE;
+
+NODE getnode()
+{
+	NODE x;
+	x=(NODE)malloc(sizeof(struct node));
+	if(x==NULL)
+		{
+			printf("memory allocation not possible\n");
+			exit(0);
+		}
+	return x;
+}
+
+
+void freenode(NODE x)
+{
+	free (x);
+}
+
+
+NODE insert_pos(NODE head,int item,int pos)
+{
+	int i;
+	NODE prev,cur,temp;
+  
+	if((pos>head->info+1)||(pos<1))
+	{
+	  printf("invalid position\n");
+	  return head;
+	}
+  
+	prev=head;
+	cur=head->link;	
+  
+	for(i=1;i<pos;i++)
+	{
+	  prev=cur;
+	  cur=cur->link;
+  }
+  
+	temp=getnode();
+	temp->info = item;
+	prev->link=temp;
+	temp->link=cur;
+	head->info+=1;
+	return head;
+}
+
+
+NODE delete_pos(NODE head,int pos)
+{
+	NODE prev,cur;
+	int i;
+  
+	if(head->link==head)
+	{
+	  printf("empty list\n");
+	  return head;
+	}
+  
+	if((pos>head->info+1)||(pos<1))
+	{
+	  printf("invalid position\n");
+	  return head;
+	}
+  
+	cur=head;
+	prev=cur;
+	for(i=0;i<pos;i++)
+	{
+	  prev=cur;
+	  cur=cur->link;
+	}
+  
+  
+	prev->link=cur->link;
+	printf("deleted itemis %d\n",cur->info);
+	freenode(cur);
+	head->info-=1;
+	return head;
+}
+
+
+void display(NODE head)
+{
+	NODE temp;
+	if(head==NULL)	
+	{
+	  printf("empty list\n");
+	  return;
+	}
+        
+	
+ for(temp=head->link;temp!=head;temp=temp->link)
+{
+	  printf("%d",temp->info);
+    printf("\n");
+}
+
+  printf("%d",temp->info);
+}
+
+
+void main()
+{
+	NODE head;
+	int ch,item,pos;
+	head=getnode();
+	head->link = head;
+	head->info = 0;
+	for(;;)
+	{
+	  printf("1.Insert Position \n 2. Delete Position\n3.display\n 4.exit");
+	  printf("\nenter the choice\n");
+	  scanf("%d",&ch);
+	  switch(ch)
+		{
+		  
+			case 1:printf("Enter the item: \n");
+			       scanf("%d",&item);
+			       printf("Enter the position: \n");
+			       scanf("%d",&pos);		    
+					head=insert_pos(head,item,pos);
+			       break;
+
+			case 2:printf("Enter the position : \n");
+			       scanf("%d",&pos);
+				head=delete_pos(head,pos);
+			       break;
+             
+       	case 3:display(head);
+				break;
+        
+			default:exit(0);
+		}	
+	}
+}
