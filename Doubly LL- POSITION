@@ -1,0 +1,59 @@
+NODE insert_pos(NODE head,int item,int pos)
+{
+	NODE temp,prev,cur;
+	int i;
+	if((pos>head->info+1) || (pos<1))
+	{
+		printf("\nInvalid position");
+		return head;
+	}
+	cur = head->rlink;
+	
+	for(i=1;i<pos;i++)
+	{
+		
+		cur = cur->rlink;
+	}
+	temp = getnode();
+	temp->info = item;
+	prev = cur->llink;
+	prev->rlink = temp;
+	temp->llink = prev;
+	cur->llink = temp;
+	temp->rlink = cur;
+	
+	head->info+=1;
+	
+	return head;
+}
+NODE delete_pos(NODE head,int pos)
+{
+	NODE prev,cur,next;
+	int i;
+	if(head->rlink == head)
+	{
+		printf("\nList is empty");
+		return head;
+	}
+	if(pos<1 || (pos>head->info))
+	{
+		printf("\nInvalid position");
+		return head;
+	}
+	cur = head->rlink;
+	for(i=1;i<pos;i++)
+	{
+		
+		cur = cur->rlink;
+	}
+	prev = cur->llink;
+	next = cur->rlink;
+	prev->rlink = next;
+	next->llink = prev;
+	
+	printf("\nDeleted element = %d",cur->info);
+	freenode(cur);
+	head->info-=1;
+	return head;
+	
+}
