@@ -74,15 +74,15 @@ int main()
 		switch(choice)
 		{
 			case 1:
-            new_node = getnode();
-				printf("Enter the element: \n");
-				scanf("%d", &new_node->info);
-            if(root == NULL)
-               root = new_node;
-            else
+			 new_node = getnode();
+			printf("Enter the element: \n");
+			scanf("%d", &new_node->info);
+			if(root == NULL)
+				root = new_node;
+			 else
 				insert(root,new_node);
 
-				break;
+			break;
 
 			case 2:
 				display(root,1);
