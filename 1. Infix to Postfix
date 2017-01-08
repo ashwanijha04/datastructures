@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 
-#define STACK_SIZE 30
+#define STACK_SIZE 40
 #define LENGTH 30
 
 void push(char, int*, char[]);
