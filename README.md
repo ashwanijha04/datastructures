@@ -1,6 +1,10 @@
 # Data-Structures-with-C
 Here is an implementation of stacks, queues, linked-list, trees, B-trees, B+ trees and some other common data structures.
-This repository is created to help university students to get their Lab Programs easily.
 You can always request for new programs or give a pull request if you find inefficient code.
 
-Happy Coding. ALL the BEST for exams !!!
+# Cloning (Get it in your desktop directly)
+1. Open Terminal
+2. Change directory to desktop - cd Desktop (Notice the captal D)
+3. Type the following command - git clone https://www.github.com/ashwanijha04/datastructures
+4. Hit Enter.
+5. You'll get a folder named datastructures.
