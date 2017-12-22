@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <ctype.h>
-//#include "infixtopostfix.h"
-
 
 struct node
 {
@@ -108,15 +106,6 @@ int main()
 	float res = 0;
 	NODE root;
 	root = NULL;
-/*********************************************
-TODO: 		1. SAVE THE INFIX TO POSTFIX PROGRAM IN THE SAME FOLDER with a dot h(.h) extension.
-		2. UNCOMMENT THE CODE BELOW.
-		3. DELETE LINES 121 AND 122.
-		4. UNCOMMENT THE HEADER FILE.
-**********************************************/
-	// printf("Enter the infix expression: \n");
-	// scanf("%s",infix);
-	// infix_to_postfix(infix,postfix);
 
 	printf("Enter a valid postfix expression: \n");
 	scanf("%s",postfix);
