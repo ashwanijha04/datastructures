@@ -23,6 +23,9 @@ NODE getnode()
 NODE create(char postfix[])
 {
 
+	// This function creates an expression tree.
+	// This tree is then passed to the evaluate function.
+
 	int i,k;
 	NODE temp;
 
@@ -30,19 +33,24 @@ NODE create(char postfix[])
 	NODE stack[100];
 
 
+	// Assing each character in the postfix expression to symbol till it reaches the last(null) character.
 	for(i=k=0; (symbol = postfix[i]) != '\0'; i++)
 	{
 		temp = getnode();
-
+		
+		// Initialise
 		temp->data = symbol;
 		temp->llink = temp->rlink = NULL;
 
+		// If symbol encountered is a alphabet or a character, keep moving.
 		if(isalnum(symbol))
 		{
 			stack[k++] = temp;
 
 		}
-
+		
+		// If you encounter an operator(+,-,*,/), add the right node and left node to that operator.
+		// We use a stack to keep track of the symbol.
 		else
 		{
 			temp->rlink = stack[--k];
@@ -52,7 +60,8 @@ NODE create(char postfix[])
 		}
 
 	}
-
+	
+	// k gets incremented in the last iteration of the loop. Decrement it back.
 	return stack[--k];
 
 }
@@ -60,25 +69,33 @@ NODE create(char postfix[])
 float evaluate(NODE root)
 {
 	float num;
-
+	
+	// left node (operator) right node is the order of evaluation.
 	switch(root->data)
 	{
 		case '+' : return evaluate(root->llink) + evaluate(root->rlink);
 		case '-' : return evaluate(root->llink) - evaluate(root->rlink);
 		case '*' : return evaluate(root->llink) * evaluate(root->rlink);
 		case '/' : return evaluate(root->llink) / evaluate(root->rlink);
+		
+		// Both ^ and $ are used for power. 
 		case'^':
 		case'$':
 			return pow(evaluate(root->llink),evaluate(root->rlink));
 
 		default: 
+				// If alphabets (x,y,z,a,b...) are entered.
+				// Ask the user the value of those variables.
+				// and continue normal execution by returning.
+				
 				if(isalpha(root->data))
 				{
 					printf("%c = \n", root->data);
 					scanf("%f",&num);
 					return num;
 				}
-
+				
+				// 
 				else
 					return root->data - '0';
 	}
