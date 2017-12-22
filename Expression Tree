@@ -95,7 +95,9 @@ float evaluate(NODE root)
 					return num;
 				}
 				
-				// 
+				// with ASCII you can just add and subtract 48(ASCII value of 0)
+				// to go between integer and character values.
+				// Just a smart way to convert int to char.
 				else
 					return root->data - '0';
 	}
