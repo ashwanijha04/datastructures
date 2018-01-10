@@ -10,4 +10,4 @@ You can always request for new programs or give a pull request if you find ineff
 5. You'll get a folder named datastructures.
 
 ## If this helped you, you can show your gratitude by donating as low as $1.
- <a href="https://www.paypal.me/ashwanijha04" target="_blank">Pay via Paypal</a>
+ <a href="https://www.paypal.me/ashwanijha04" target="_blank">Paypal</a>
