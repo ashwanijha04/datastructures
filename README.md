@@ -8,3 +8,6 @@ You can always request for new programs or give a pull request if you find ineff
 3. Type the following command - git clone https://www.github.com/ashwanijha04/datastructures
 4. Hit Enter.
 5. You'll get a folder named datastructures.
+
+## If this helped you, you can show your gratitude by donating as low as $1.
+Paypal[paypal.me/ashwanijha04]
