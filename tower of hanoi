@@ -5,7 +5,7 @@ void tower(int n, char source, char aux, char destination)
 {
 	if(n==1)
 	{
-		printf("Move disc 1 from %c to %c \n",source, destination);
+		printf("Move disk 1 from %c to %c \n",source, destination);
 		return;
 	}
 
